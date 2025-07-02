@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: my-fastapi-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    # O comando abaixo sobrescreve o CMD do Dockerfile para habilitar o --reload,
+    # que é ideal para o ambiente de desenvolvimento.
+    command: uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+  
